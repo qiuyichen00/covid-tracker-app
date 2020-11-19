@@ -1,6 +1,5 @@
-
 import axios from 'axios';
-//axios is used to make api request
+//axios is used to make api request 
 
 const url = 'https://covid19.mathdro.id/api';
 
