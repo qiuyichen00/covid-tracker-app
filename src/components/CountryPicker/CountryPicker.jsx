@@ -1,45 +1,29 @@
-import React, {useState, useEffect } from 'react';
-import  { NativeSelect, FormControl } from '@material-ui/core';
-import styles from './CountryPicker.module.css'
-import  { fetchCountries } from '../../api';
+import React, { useState, useEffect } from 'react';
+import { NativeSelect, FormControl } from '@material-ui/core';
 
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete'; 
-const CountryPicker = ({handleCountryChange}) => {
-    const [fetchedCountries, setFetechedCountries] = useState([]);
-    const initialOption = "";
-    const [value, setValue] = useState(initialOption);
-    useEffect(() => {
-        const fetchAPI = async () => {
-            setFetechedCountries(await fetchCountries());
-        }
-        fetchAPI();
-    }, []);
+import { fetchCountries } from '../../api';
 
-    console.log(fetchedCountries);
-    /*return(
-        <FormControl className={styles.formControl}>
-            <NativeSelect defaultValue="" onChange={(e) => handleCountryChange(e.target.value)}>
-                <option value="">Global</option>
-                {fetchedCountries.map((country, i) => <option key={i} value={country}>{country}</option>)}
-            </NativeSelect>
-        </FormControl>
-    )*/
+import styles from './CountryPicker.module.css';
 
-    return(
-        <Autocomplete 
-            value={value}
-            onChange = {(e, newValue) => {
-                setValue(newValue);
-                handleCountryChange(newValue);
-            } }
-            id="country-select-demo"
-            options={fetchedCountries}
-            getOptionLabel={(option) => option}
-            style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Choose a country" variant="outlined" />}
-        />
-    );
-}
+const Countries = ({ handleCountryChange }) => {
+  const [countries, setCountries] = useState([]);
 
-export default CountryPicker;
+  useEffect(() => {
+    const fetchAPI = async () => {
+      setCountries(await fetchCountries());
+    };
+
+    fetchAPI();
+  }, []);
+
+  return (
+    <FormControl className={styles.formControl}>
+      <NativeSelect defaultValue="" onChange={(e) => handleCountryChange(e.target.value)}>
+        <option value="">United States</option>
+        {countries.map((country, i) => <option key={i} value={country}>{country}</option>)}
+      </NativeSelect>
+    </FormControl>
+  );
+};
+
+export default Countries;
